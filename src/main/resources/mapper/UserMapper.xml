@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dun.mapper.UserMapper">
+
+    <insert id="insert">
+        INSERT INTO user(`id`, `name`, `password`, `phone`, `age`, `sex`, `email`, `address`, `is_admin`, `create_time`, `update_time`, `is_deleted`) VALUES
+        (#, 'admin', '123456', '13534846217', NULL, 1, NULL, NULL, 1, '2024-06-14 00:00:00', NULL, 0),
+    </insert>
+    <select id="getAll" resultType="com.dun.entity.User">
+        SELECT * FROM user
+        <where>
+            AND is_deleted = 0
+        </where>
+    </select>
+    <select id="getByName" resultType="com.dun.entity.User">
+        SELECT * FROM user
+        <where>
+            <if test="name != null and name != ''">
+                AND name = #{name}
+            </if>
+            AND is_deleted = 0
+        </where>
+    </select>
+    <select id="getById" resultType="com.dun.entity.User">
+        SELECT * FROM user
+        <where>
+            <if test="id != null and id != ''">
+                AND id = #{id}
+            </if>
+            AND is_deleted = 0
+        </where>
+    </select>
+    <select id="getByPhone" resultType="com.dun.entity.User">
+        SELECT * FROM user
+        <where>
+            <if test="phone != null and phone != ''">
+                AND phone = #{phone}
+            </if>
+            AND is_deleted = 0
+        </where>
+    </select>
+    <update id="deleteById">
+        UPDATE user SET is_deleted = 1
+        <where>
+            <if test="id != null and id != ''">
+                AND id = #{id}
+            </if>
+        </where>
+    </update>
+</mapper>
